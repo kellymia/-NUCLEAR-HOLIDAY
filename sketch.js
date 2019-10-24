@@ -9,6 +9,7 @@ var envArr = [];
 var filterArr = [];
 var lowpassArr = [];
 
+//oscillator variables
 var notes = [20, 25,37,33,32,40];
 var numVoices = 10;
 
@@ -37,6 +38,7 @@ function preload(){
 function setup(){
   createCanvas(windowWidth,windowHeight);
   userStartAudio();
+  
   //hide the cursor
   noCursor();
 
@@ -51,10 +53,8 @@ function setup(){
   //the sound setup
   soundscape.setVolume(0.5);
   soundscape.loop();
-  //create an fft to analyse the centroid
-  fft = new p5.FFT(0.64);
 
-  //forloop to set up the additive synthesis arays
+  //forloop to set up oscillators
   for(i = 0; i < numVoices; i++){
     envArr[i] = new p5.Env();
     envArr[i].setADSR(5, 5, 0.0, 0.5);
@@ -92,8 +92,7 @@ function setup(){
 
 function draw(){
 
-  //the sound draw functions
-
+  //start the oscillators every 100ms
   if(frameCount%100 == 0){
     for(i = 0; i<numVoices; i++){
       var randAttack = random(2,5); //random attack between 1s and 5s
